@@ -1,3 +1,4 @@
+/* styles.css */
 body {
   font-family: Arial, sans-serif;
   text-align: center;
@@ -8,4 +9,46 @@ body {
 
 #notation {
   margin-bottom: 20px;
+  max-width: 100%; /* Ensure the notation doesn't overflow */
+  width: 100%;
+  height: auto;
+}
+
+#currentNote {
+  font-size: 24px; /* Increase font size for better readability */
+}
+
+.noteContainer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.noteButton {
+  margin: 5px; /* Add margin between note buttons */
+  padding: 10px 20px; /* Add padding to the buttons */
+  font-size: 18px; /* Increase font size for better touch usability */
+  background-color: #838383;
+  border: none;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  border-radius: 8px;
+}
+
+/* Media query for smaller screens */
+@media screen and (max-width: 600px) {
+  body {
+    padding: 10px; /* Adjust padding for smaller screens */
+  }
+
+  #currentNote {
+    font-size: 20px; /* Decrease font size for smaller screens */
+  }
+
+  .noteButton {
+    font-size: 16px; /* Decrease font size for smaller screens */
+    padding: 8px 16px; /* Adjust padding for smaller screens */
+  }
 }

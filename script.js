@@ -1,10 +1,30 @@
-// Sample note data
-const notes = [
-  { key: "C4", weight: 1 },
-  { key: "D4", weight: 1 },
-  { key: "E4", weight: 1 },
-  // add more notes as needed
+let notes = [
+  { key: "G3", weight: 100 },
+  { key: "A3", weight: 100 },
+  { key: "B3", weight: 100 },
+  { key: "A4", weight: 100 },
+  { key: "B4", weight: 100 },
+  { key: "C4", weight: 100 },
+  { key: "D4", weight: 100 },
+  { key: "E4", weight: 100 },
+  { key: "F4", weight: 100 },
+  { key: "G4", weight: 100 },
+  { key: "A5", weight: 100 },
+  { key: "B5", weight: 100 },
+  { key: "C5", weight: 100 },
+  { key: "D5", weight: 100 },
+  { key: "E5", weight: 100 },
+  { key: "F5", weight: 100 },
 ];
+
+notes = JSON.parse(localStorage.getItem("notes")) || notes;
+
+let lastNote = "C4"; // Last played note for guessing on button press
+
+// const notes = [
+//   { key: "C4", weight: 100 },
+//   { key: "D4", weight: 100 },
+// ];
 
 // Function to get a note with higher weight more frequently
 function getWeightedRandomNote() {
@@ -24,7 +44,7 @@ function renderNote(note) {
   const div = document.getElementById("notation");
   div.innerHTML = "";
   const renderer = new VF.Renderer(div, VF.Renderer.Backends.SVG);
-  renderer.resize(200, 200);
+  renderer.resize(400, 200);
   const context = renderer.getContext();
   context.setFont("Arial", 10, "").setBackgroundFillStyle("#eed");
   const stave = new VF.Stave(10, 40, 150);
@@ -45,13 +65,35 @@ function renderNote(note) {
 // Function to play a note using Tone.js
 function playNote() {
   const note = getWeightedRandomNote();
+  lastNote = note;
   renderNote(note);
   const synth = new Tone.Synth().toDestination();
   synth.triggerAttackRelease(note.key, "8n");
-  // Update note weight logic
-  note.weight += 1; // Increase weight for practice
-  localStorage.setItem("notes", JSON.stringify(notes));
 }
 
-document.getElementById("play-note").addEventListener("click", playNote);
+function guessNote(pressed) {
+  const correctNote = notes.find((note) => note === lastNote);
+  if (pressed === correctNote.key.slice(0, -1)) {
+    correctNote.weight = Math.max(correctNote.weight * 0.8, 10);
+
+    document.getElementById("currentNote").innerHTML = "Correct!";
+  } else {
+    correctNote.weight = Math.min(correctNote.weight * 1.25, 1000);
+    document.getElementById("currentNote").innerHTML = "Incorrect!";
+  }
+
+  localStorage.setItem("notes", JSON.stringify(notes));
+  playNote();
+}
+
+// Get all the noteButton divs
+const noteButtons = document.getElementsByClassName("noteButton");
+
+// Add event listener to each noteButton div
+Array.from(noteButtons).forEach((noteButton) => {
+  noteButton.addEventListener("click", () => {
+    guessNote(noteButton.innerHTML);
+  });
+});
+
 playNote();
