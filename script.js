@@ -19,22 +19,24 @@ function getWeightedRandomNote() {
 }
 
 // Function to render a note using VexFlow
-function renderNote() {
+function renderNote(note) {
   const VF = Vex.Flow;
   const div = document.getElementById("notation");
   div.innerHTML = "";
   const renderer = new VF.Renderer(div, VF.Renderer.Backends.SVG);
   renderer.resize(200, 200);
   const context = renderer.getContext();
+  context.setFont("Arial", 10, "").setBackgroundFillStyle("#eed");
   const stave = new VF.Stave(10, 40, 150);
   stave.addClef("treble").setContext(context).draw();
-  const note = getWeightedRandomNote();
+  const formattedNote =
+    note.key.toLowerCase().slice(0, -1) + "/" + note.key.slice(-1);
   const vfNote = new VF.StaveNote({
     clef: "treble",
-    keys: [note.key.toLowerCase()],
-    duration: "q",
+    keys: [formattedNote],
+    duration: "w",
   });
-  const voice = new VF.Voice({ num_beats: 1, beat_value: 4 });
+  const voice = new VF.Voice({ num_beats: 4, beat_value: 4 });
   voice.addTickables([vfNote]);
   new VF.Formatter().joinVoices([voice]).format([voice], 100);
   voice.draw(context, stave);
@@ -43,6 +45,7 @@ function renderNote() {
 // Function to play a note using Tone.js
 function playNote() {
   const note = getWeightedRandomNote();
+  renderNote(note);
   const synth = new Tone.Synth().toDestination();
   synth.triggerAttackRelease(note.key, "8n");
   // Update note weight logic
@@ -51,4 +54,4 @@ function playNote() {
 }
 
 document.getElementById("play-note").addEventListener("click", playNote);
-renderNote();
+playNote();
