@@ -5,17 +5,27 @@ body {
   margin: 0;
   padding: 20px;
   background-color: #f0f0f0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 #notation {
-  margin-bottom: 20px;
-  max-width: 100%; /* Ensure the notation doesn't overflow */
-  width: 100%;
-  height: auto;
+  margin: 0 auto; /* Center the notation div */
+  width: 80%; /* Take up 80% of the viewport width */
+  height: 60vh; /* Take up 60% of the viewport height */
+  background-color: white; /* Background color for better visibility */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 #currentNote {
   font-size: 24px; /* Increase font size for better readability */
+  margin: 20px 0;
 }
 
 .noteContainer {
@@ -69,6 +79,10 @@ body {
 
   .noteButton {
     font-size: 16px; /* Decrease font size for smaller screens */
-    padding: 8px 16px; /* Adjust padding for smaller screens */
+    padding: 10px 20px; /* Adjust padding for smaller screens */
+  }
+  #notation {
+    width: 100%; /* Ensure the notation uses full width on smaller screens */
+    height: 50vh; /* Adjust height for smaller screens */
   }
 }

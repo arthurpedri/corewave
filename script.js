@@ -75,11 +75,21 @@ function renderNote(note) {
   const VF = Vex.Flow;
   const div = document.getElementById("notation");
   div.innerHTML = "";
+  const width = div.clientWidth;
+  const height = div.clientHeight;
   const renderer = new VF.Renderer(div, VF.Renderer.Backends.SVG);
-  renderer.resize(400, 200);
+  renderer.resize(width, height);
   const context = renderer.getContext();
   context.setFont("Arial", 10, "").setBackgroundFillStyle("#eed");
-  const stave = new VF.Stave(10, 40, 150);
+  const scale = 4;
+  context.scale(scale, scale);
+
+  const staveWidth = (width / scale) * 0.5;
+  const staveHeight = (height / scale) * 0.8;
+  const staveX = (width / scale - staveWidth) / 2; // Center the stave horizontally
+  const staveY = (height / scale - staveHeight) / 2; // Center the stave vertically
+
+  const stave = new VF.Stave(staveX, staveY, staveWidth);
   stave.addClef(clef).setContext(context).draw();
   const formattedNote =
     note.key.toLowerCase().slice(0, -1) + "/" + note.key.slice(-1);
