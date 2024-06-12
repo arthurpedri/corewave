@@ -1,21 +1,44 @@
 let notes = [
-  { key: "G3", weight: 100 },
-  { key: "A3", weight: 100 },
-  { key: "B3", weight: 100 },
-  { key: "A4", weight: 100 },
-  { key: "B4", weight: 100 },
-  { key: "C4", weight: 100 },
-  { key: "D4", weight: 100 },
-  { key: "E4", weight: 100 },
-  { key: "F4", weight: 100 },
-  { key: "G4", weight: 100 },
-  { key: "A5", weight: 100 },
-  { key: "B5", weight: 100 },
-  { key: "C5", weight: 100 },
-  { key: "D5", weight: 100 },
-  { key: "E5", weight: 100 },
-  { key: "F5", weight: 100 },
+  { key: "A3", weight: 100, clef: "treble" },
+  { key: "G3", weight: 100, clef: "treble" },
+  { key: "B3", weight: 100, clef: "treble" },
+  { key: "A4", weight: 100, clef: "treble" },
+  { key: "B4", weight: 100, clef: "treble" },
+  { key: "C4", weight: 100, clef: "treble" },
+  { key: "D4", weight: 100, clef: "treble" },
+  { key: "E4", weight: 100, clef: "treble" },
+  { key: "F4", weight: 100, clef: "treble" },
+  { key: "G4", weight: 100, clef: "treble" },
+  { key: "A5", weight: 100, clef: "treble" },
+  { key: "B5", weight: 100, clef: "treble" },
+  { key: "C5", weight: 100, clef: "treble" },
+  { key: "D5", weight: 100, clef: "treble" },
+  { key: "E5", weight: 100, clef: "treble" },
+  { key: "F5", weight: 100, clef: "treble" },
+  { key: "A2", weight: 100, clef: "bass" },
+  { key: "F2", weight: 100, clef: "bass" },
+  { key: "E2", weight: 100, clef: "bass" },
+  { key: "D2", weight: 100, clef: "bass" },
+  { key: "C2", weight: 100, clef: "bass" },
+  { key: "B1", weight: 100, clef: "bass" },
+  { key: "G2", weight: 100, clef: "bass" },
+  { key: "B2", weight: 100, clef: "bass" },
+  { key: "A3", weight: 100, clef: "bass" },
+  { key: "B3", weight: 100, clef: "bass" },
+  { key: "C3", weight: 100, clef: "bass" },
+  { key: "D3", weight: 100, clef: "bass" },
+  { key: "E3", weight: 100, clef: "bass" },
+  { key: "F3", weight: 100, clef: "bass" },
+  { key: "G3", weight: 100, clef: "bass" },
+  { key: "C4", weight: 100, clef: "bass" },
+  { key: "D4", weight: 100, clef: "bass" },
+  { key: "E4", weight: 100, clef: "bass" },
+  { key: "F4", weight: 100, clef: "bass" },
 ];
+
+let clef = "bass";
+
+clef = JSON.parse(localStorage.getItem("clef")) || clef;
 
 notes = JSON.parse(localStorage.getItem("notes")) || notes;
 
@@ -26,11 +49,20 @@ let lastNote = "C4"; // Last played note for guessing on button press
 //   { key: "D4", weight: 100 },
 // ];
 
+function getCorrectNotes() {
+  if (clef === "treble") {
+    return notes.filter((note) => note.clef === "treble");
+  } else if (clef === "bass") {
+    return notes.filter((note) => note.clef === "bass");
+  }
+}
+
 // Function to get a note with higher weight more frequently
-function getWeightedRandomNote() {
-  let totalWeight = notes.reduce((sum, note) => sum + note.weight, 0);
+function getweightedRandomNote() {
+  const correctNotes = getCorrectNotes();
+  let totalWeight = correctNotes.reduce((sum, note) => sum + note.weight, 0);
   let random = Math.random() * totalWeight;
-  for (let note of notes) {
+  for (let note of correctNotes) {
     if (random < note.weight) {
       return note;
     }
@@ -48,11 +80,11 @@ function renderNote(note) {
   const context = renderer.getContext();
   context.setFont("Arial", 10, "").setBackgroundFillStyle("#eed");
   const stave = new VF.Stave(10, 40, 150);
-  stave.addClef("treble").setContext(context).draw();
+  stave.addClef(clef).setContext(context).draw();
   const formattedNote =
     note.key.toLowerCase().slice(0, -1) + "/" + note.key.slice(-1);
   const vfNote = new VF.StaveNote({
-    clef: "treble",
+    clef: clef,
     keys: [formattedNote],
     duration: "w",
   });
@@ -64,7 +96,7 @@ function renderNote(note) {
 
 // Function to play a note using Tone.js
 function playNote() {
-  const note = getWeightedRandomNote();
+  const note = getweightedRandomNote();
   lastNote = note;
   renderNote(note);
   const synth = new Tone.Synth().toDestination();
@@ -72,18 +104,44 @@ function playNote() {
 }
 
 function guessNote(pressed) {
-  const correctNote = notes.find((note) => note === lastNote);
+  const correctNote = notes.find(
+    (note) => note === lastNote && note.clef === clef
+  );
   if (pressed === correctNote.key.slice(0, -1)) {
+    const oldWeight = correctNote.weight;
     correctNote.weight = Math.max(correctNote.weight * 0.8, 10);
 
-    document.getElementById("currentNote").innerHTML = "Correct!";
+    document.getElementById("currentNote").innerHTML =
+      "Correct! (" +
+      correctNote.key +
+      " -" +
+      (oldWeight - correctNote.weight) +
+      " weight)";
   } else {
+    const oldWeight = correctNote.weight;
+
     correctNote.weight = Math.min(correctNote.weight * 1.25, 1000);
-    document.getElementById("currentNote").innerHTML = "Incorrect!";
+    document.getElementById("currentNote").innerHTML =
+      "Incorrect! (" +
+      correctNote.key +
+      " +" +
+      (correctNote.weight - oldWeight) +
+      " weight)";
   }
 
   localStorage.setItem("notes", JSON.stringify(notes));
   playNote();
+}
+
+function switchClef() {
+  clef = clef === "bass" ? "treble" : "bass";
+  localStorage.setItem("clef", JSON.stringify(clef));
+  playNote();
+}
+
+function deleteStorage() {
+  localStorage.clear();
+  location.reload();
 }
 
 // Get all the noteButton divs
@@ -95,5 +153,10 @@ Array.from(noteButtons).forEach((noteButton) => {
     guessNote(noteButton.innerHTML);
   });
 });
+
+document
+  .getElementById("deleteStorage")
+  .addEventListener("click", deleteStorage);
+document.getElementById("switchClef").addEventListener("click", switchClef);
 
 playNote();

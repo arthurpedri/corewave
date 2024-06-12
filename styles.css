@@ -37,6 +37,26 @@ body {
   border-radius: 8px;
 }
 
+.optionsContainer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+#deleteStorage,
+#switchClef {
+  margin: 5px; /* Add margin between note buttons */
+  padding: 10px 20px; /* Add padding to the buttons */
+  font-size: 18px; /* Increase font size for better touch usability */
+  background-color: #424040;
+  border: none;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  border-radius: 8px;
+}
+
 /* Media query for smaller screens */
 @media screen and (max-width: 600px) {
   body {
