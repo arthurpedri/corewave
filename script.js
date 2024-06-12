@@ -81,7 +81,8 @@ function renderNote(note) {
   renderer.resize(width, height);
   const context = renderer.getContext();
   context.setFont("Arial", 10, "").setBackgroundFillStyle("#eed");
-  const scale = 2;
+  const scale = width > 1000 ? 4 : 2;
+
   context.scale(scale, scale);
 
   const staveWidth = (width / scale) * 0.5;
