@@ -107,6 +107,19 @@ body {
   font-size: 16px;
 }
 
+.explanationText {
+  padding: 20px;
+  border-radius: 5px;
+  margin-top: 0px;
+  text-align: center;
+}
+
+.explanationText p {
+  font-size: 16px;
+  line-height: 1.5;
+  color: #333;
+}
+
 /* Media query for smaller screens */
 @media screen and (max-width: 600px) {
   body {

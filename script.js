@@ -186,7 +186,7 @@ function guessNote(pressed) {
       correctNote.key +
       " -" +
       Math.trunc(oldWeight - correctNote.weight) +
-      " weight)";
+      ")";
   } else {
     const oldWeight = correctNote.weight;
 
@@ -196,7 +196,7 @@ function guessNote(pressed) {
       correctNote.key +
       " +" +
       Math.trunc(correctNote.weight - oldWeight) +
-      " weight)";
+      ")";
   }
 
   localStorage.setItem("notes", JSON.stringify(notes));
