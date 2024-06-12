@@ -81,7 +81,7 @@ function renderNote(note) {
   renderer.resize(width, height);
   const context = renderer.getContext();
   context.setFont("Arial", 10, "").setBackgroundFillStyle("#eed");
-  const scale = width > 1000 ? 4 : 2;
+  const scale = window.innerWidth > 1000 ? 4 : 2;
 
   context.scale(scale, scale);
 
