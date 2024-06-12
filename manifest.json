@@ -2,18 +2,18 @@
   "name": "CoreWave",
   "short_name": "CoreWave",
   "description": "A web app for practicing sightreading",
-  "start_url": "/index.html",
+  "start_url": "/corewave/index.html",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#000000",
   "icons": [
     {
-      "src": "icon.png",
+      "src": "/corewave/icon.png",
       "sizes": "192x192",
       "type": "image/png"
     },
     {
-      "src": "icon.png",
+      "src": "/corewave/icon.png",
       "sizes": "512x512",
       "type": "image/png"
     }

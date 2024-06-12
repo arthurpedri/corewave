@@ -1,18 +1,18 @@
 const CACHE_NAME = "corewave-cache-v1";
 const urlsToCache = [
-  "/",
-  "/index.html",
-  "/styles.css",
-  "/script.js",
-  "/icon.png",
-  "/samples/C4.mp3",
-  "/samples/Ds4.mp3",
-  "/samples/Fs4.mp3",
-  "/samples/A4.mp3",
-  "/manifest.json", // Add the manifest file
-  "/service-worker.js",
-  "/Tone.min.js",
-  "/vexflow-min.js",
+  "/corewave/",
+  "/corewave/index.html",
+  "/corewave/styles.css",
+  "/corewave/script.js",
+  "/corewave/icon.png",
+  "/corewave/samples/C4.mp3",
+  "/corewave/samples/Ds4.mp3",
+  "/corewave/samples/Fs4.mp3",
+  "/corewave/samples/A4.mp3",
+  "/corewave/manifest.json", // Add the manifest file
+  "/corewave/service-worker.js",
+  "/corewave/Tone.min.js",
+  "/corewave/vexflow-min.js",
 
   // Add other resources you want to cache
 ];

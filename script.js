@@ -148,7 +148,7 @@ function playNote() {
       A4: "A4.mp3",
     },
     release: 1,
-    baseUrl: "samples/",
+    baseUrl: "/corewave/samples/",
   }).toDestination();
 
   Tone.loaded().then(() => {
