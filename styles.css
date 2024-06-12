@@ -51,6 +51,8 @@ body {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+  flex-direction: row;
+  align-items: center;
 }
 
 #deleteStorage,
@@ -79,6 +81,30 @@ body {
 
 .optionsContainer select option {
   padding: 5px;
+}
+
+.reward,
+.punishment {
+  margin: 10px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+}
+
+.reward label,
+.punishment label {
+  font-weight: bold;
+}
+
+.reward select,
+.punishment select {
+  padding: 5px;
+  margin-top: 5px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  background-color: #fff;
+  font-size: 16px;
 }
 
 /* Media query for smaller screens */

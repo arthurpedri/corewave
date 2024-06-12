@@ -110,7 +110,7 @@ function renderNote(note) {
 }
 
 // Function to play a note using Tone.js
-function playNote() {
+function playSynthNote() {
   const note = getweightedRandomNote();
   lastNote = note;
   renderNote(note);
@@ -134,6 +134,43 @@ function playNote() {
 
   // Start Tone.Transport to play the loop
   Tone.Transport.start();
+}
+
+function playNote() {
+  const note = getweightedRandomNote();
+  lastNote = note;
+  renderNote(note);
+  const sampler = new Tone.Sampler({
+    urls: {
+      C4: "C4.mp3",
+      "D#4": "Ds4.mp3",
+      "F#4": "Fs4.mp3",
+      A4: "A4.mp3",
+    },
+    release: 1,
+    baseUrl: "samples/",
+  }).toDestination();
+
+  Tone.loaded().then(() => {
+    // Stop the previously playing note (if any)
+    if (currentNotePlayer) {
+      currentNotePlayer.stop();
+    }
+
+    // Play the note multiple times with a loop
+    let counter = 0;
+    currentNotePlayer = new Tone.Loop(() => {
+      if (counter < 4) {
+        sampler.triggerAttackRelease(note.key, "8n");
+        counter++;
+      } else {
+        currentNotePlayer.stop(); // Stop the loop when the desired number of times is reached
+      }
+    }, "4n").start();
+
+    // Start Tone.Transport to play the loop
+    Tone.Transport.start();
+  });
 }
 
 function guessNote(pressed) {
