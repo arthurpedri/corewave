@@ -44,8 +44,11 @@ notes = JSON.parse(localStorage.getItem("notes")) || notes;
 
 let lastNote = "C4"; // Last played note for guessing on button press
 
-let reward = 0.8;
-let punishment = 1.2;
+// Keep track of the currently playing note
+let currentNotePlayer = null;
+
+let reward = 0;
+let punishment = 1.6;
 
 reward = JSON.parse(localStorage.getItem("reward")) || reward;
 punishment = JSON.parse(localStorage.getItem("punishment")) || punishment;
@@ -112,7 +115,25 @@ function playNote() {
   lastNote = note;
   renderNote(note);
   const synth = new Tone.Synth().toDestination();
-  synth.triggerAttackRelease(note.key, "8n");
+
+  // Stop the previously playing note (if any)
+  if (currentNotePlayer) {
+    currentNotePlayer.stop();
+  }
+
+  // Play the note multiple times with a loop
+  let counter = 0;
+  currentNotePlayer = new Tone.Loop(() => {
+    if (counter < 4) {
+      synth.triggerAttackRelease(note.key, "8n");
+      counter++;
+    } else {
+      currentNotePlayer.stop(); // Stop the loop when the desired number of times is reached
+    }
+  }, "4n").start();
+
+  // Start Tone.Transport to play the loop
+  Tone.Transport.start();
 }
 
 function guessNote(pressed) {
