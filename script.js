@@ -36,7 +36,7 @@ let notes = [
   { key: "F4", weight: 100, clef: "bass" },
 ];
 
-let clef = "bass";
+let clef = "treble";
 
 clef = JSON.parse(localStorage.getItem("clef")) || clef;
 
@@ -44,10 +44,11 @@ notes = JSON.parse(localStorage.getItem("notes")) || notes;
 
 let lastNote = "C4"; // Last played note for guessing on button press
 
-// const notes = [
-//   { key: "C4", weight: 100 },
-//   { key: "D4", weight: 100 },
-// ];
+let reward = 0.8;
+let punishment = 1.2;
+
+reward = JSON.parse(localStorage.getItem("reward")) || reward;
+punishment = JSON.parse(localStorage.getItem("punishment")) || punishment;
 
 function getCorrectNotes() {
   if (clef === "treble") {
@@ -120,23 +121,23 @@ function guessNote(pressed) {
   );
   if (pressed === correctNote.key.slice(0, -1)) {
     const oldWeight = correctNote.weight;
-    correctNote.weight = Math.max(correctNote.weight * 0.8, 10);
+    correctNote.weight = Math.max(correctNote.weight * reward, 0);
 
     document.getElementById("currentNote").innerHTML =
       "Correct! (" +
       correctNote.key +
       " -" +
-      (oldWeight - correctNote.weight) +
+      Math.trunc(oldWeight - correctNote.weight) +
       " weight)";
   } else {
     const oldWeight = correctNote.weight;
 
-    correctNote.weight = Math.min(correctNote.weight * 1.25, 1000);
+    correctNote.weight = Math.min(correctNote.weight * punishment, 1000);
     document.getElementById("currentNote").innerHTML =
       "Incorrect! (" +
       correctNote.key +
       " +" +
-      (correctNote.weight - oldWeight) +
+      Math.trunc(correctNote.weight - oldWeight) +
       " weight)";
   }
 
@@ -169,5 +170,31 @@ document
   .getElementById("deleteStorage")
   .addEventListener("click", deleteStorage);
 document.getElementById("switchClef").addEventListener("click", switchClef);
+
+const rewardPercentageSelect = document.getElementById("rewardPercentage");
+const punishmentPercentageSelect = document.getElementById(
+  "punishmentPercentage"
+);
+
+rewardPercentageSelect.value = reward;
+punishmentPercentageSelect.value = punishment;
+
+// Add a change listener to the reward dropdown
+rewardPercentageSelect.addEventListener("change", function () {
+  reward = this.value;
+});
+
+// Add a change listener to the punishment dropdown
+punishmentPercentageSelect.addEventListener("change", function () {
+  punishment = this.value;
+});
+
+document.getElementById("clearWeights").addEventListener("click", function () {
+  notes.forEach((note) => {
+    note.weight = 100;
+  });
+  localStorage.setItem("notes", JSON.stringify(notes));
+  playNote();
+});
 
 playNote();

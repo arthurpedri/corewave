@@ -19,8 +19,39 @@
       <div class="noteButton">B</div>
     </div>
     <div class="optionsContainer">
-      <div id="deleteStorage">Clear Storage</div>
+      <div id="clearWeights">Clear Weights</div>
       <div id="switchClef">Switch Clef</div>
+      <div id="reward">
+        <label for="rewardPercentage">Reward Percentage:</label>
+        <select id="rewardPercentage">
+          <option value="0.9">10%</option>
+          <option value="0.8">20%</option>
+          <option value="0.7">30%</option>
+          <option value="0.6">40%</option>
+          <option value="0.5">50%</option>
+          <option value="0.4">60%</option>
+          <option value="0.3">70%</option>
+          <option value="0.2">80%</option>
+          <option value="0.1">90%</option>
+          <option value="0">100%</option>
+        </select>
+      </div>
+      <div id="punishment">
+        <label for="punishmentPercentage">Punishment Percentage:</label>
+        <select id="punishmentPercentage">
+          <option value="1.1">10%</option>
+          <option value="1.2">20%</option>
+          <option value="1.3">30%</option>
+          <option value="1.4">40%</option>
+          <option value="1.5">50%</option>
+          <option value="1.6">60%</option>
+          <option value="1.7">70%</option>
+          <option value="1.8">80%</option>
+          <option value="1.9">90%</option>
+          <option value="2">100%</option>
+        </select>
+      </div>
+      <div id="deleteStorage">Clear Storage</div>
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.25/Tone.min.js"></script>
     <script src="https://unpkg.com/vexflow/releases/vexflow-min.js"></script>

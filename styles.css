@@ -54,7 +54,8 @@ body {
 }
 
 #deleteStorage,
-#switchClef {
+#switchClef,
+#clearWeights {
   margin: 5px; /* Add margin between note buttons */
   padding: 10px 20px; /* Add padding to the buttons */
   font-size: 18px; /* Increase font size for better touch usability */
@@ -65,6 +66,19 @@ body {
   text-decoration: none;
   cursor: pointer;
   border-radius: 8px;
+}
+
+.optionsContainer select {
+  padding: 5px;
+  margin: 5px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  background-color: #fff;
+  font-size: 16px;
+}
+
+.optionsContainer select option {
+  padding: 5px;
 }
 
 /* Media query for smaller screens */
@@ -84,5 +98,10 @@ body {
   #notation {
     width: 100%; /* Ensure the notation uses full width on smaller screens */
     height: 50vh; /* Adjust height for smaller screens */
+  }
+
+  .optionsContainer select {
+    width: 100%;
+    margin: 10px 0;
   }
 }
