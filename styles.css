@@ -165,3 +165,9 @@ footer a:hover {
     margin: 10px 0;
   }
 }
+
+@media screen and (min-width: 1600px) {
+  .noteButton {
+    flex: 1 0 4%;
+  }
+}
