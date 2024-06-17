@@ -170,4 +170,7 @@ footer a:hover {
   .noteButton {
     flex: 1 0 4%;
   }
+  .noteContainer {
+    width: 50%;
+  }
 }

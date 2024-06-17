@@ -1,4 +1,4 @@
-const CACHE_NAME = "corewave-cache-v1";
+const CACHE_NAME = "corewave-cache-v2";
 const urlsToCache = [
   "/corewave/",
   "/corewave/index.html",
